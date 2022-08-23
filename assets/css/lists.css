@@ -1,0 +1,63 @@
+html, body {
+    height: 100%;
+    background-color: #202124;
+}
+
+.list-form-container {
+    min-height: 30%;
+    display: flex;
+    justify-content: center;
+}
+
+.list-inline-form-container {
+    align-self: center;
+}
+
+.list-name-input {
+    width: 400px;
+    height: 25px;
+    line-height: 25px;
+    font-size: 20px;
+    background-color: #e8eaed;
+}
+
+.list-name-input ~ button {
+    font-size: 20px;
+    line-height: 25px;
+    text-align: center;
+    background-color: #e8eaed;
+    border: 2px solid #5f6368;
+    padding: 1px 2px;
+    border-radius: 4px;
+}
+
+section {
+	min-height: 70%;
+}
+
+#lists-collection {
+    display: grid;
+    grid-template-columns: repeat(5, 19%);
+    gap: 1%;
+}
+
+.list-name-container {
+	border-radius: 8px;
+    border: 1px solid #5f6368;
+	box-sizing: border-box;
+	min-height: 200px;
+    text-align: center;
+}
+
+.list-name-container:hover {
+    box-shadow: 0 0 0 0 rgba(60,64,67,.3),0 0 0 0 rgba(60,64,67,.15);
+    background-color: rgba(232,234,237,.08);
+}
+
+.list-name {
+    font-size: 2em;
+    text-decoration: underline;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    color: #e8eaed;
+}
