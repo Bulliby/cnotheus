@@ -10,12 +10,16 @@ export default class Lists
         });
     }
 
-    addList() {
+    addList(name) {
+        if (name.length == 0) {
+            alert('validation');
+            return;
+        }
         return new customXhr({
             verb: "POST",
             url: "http://projects/project/list/add",
             data: JSON.stringify({
-                name: "Depuis le js"
+                name: name
             })
         });
     }

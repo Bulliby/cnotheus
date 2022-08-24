@@ -35,18 +35,19 @@ section {
 	min-height: 70%;
 }
 
-#lists-collection {
+#lists-template {
     display: grid;
-    grid-template-columns: repeat(5, 19%);
+    grid-template-columns: repeat(5, auto);
     gap: 1%;
 }
 
 .list-name-container {
 	border-radius: 8px;
     border: 1px solid #5f6368;
-	box-sizing: border-box;
-	min-height: 200px;
     text-align: center;
+    align-self: stretch;
+    justify-self: stretch;
+    height: 200px;
 }
 
 .list-name-container:hover {
@@ -60,4 +61,32 @@ section {
     overflow: hidden;
     text-overflow: ellipsis;
     color: #e8eaed;
+    display: block;
+}
+
+.list-delete-icon {
+    width: 20px;
+    height: 20px;
+    position: absolute;
+    bottom: 5px;
+    right: 5px;
+    display: block;
+    z-index: 10;
+}
+
+.list-eye-icon {
+    width: 20px;
+    height: 20px;
+    position: absolute;
+    bottom: 5px;
+    right: 30px;
+    padding-right: 2px;
+    display: block;
+    z-index: 10;
+}
+
+.list-icon-container {
+    position: relative;
+    width: inherit;
+    height: inherit;
 }
