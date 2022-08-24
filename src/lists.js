@@ -23,4 +23,29 @@ export default class Lists
             })
         });
     }
+
+    setListState(state) {
+        this.state = state;
+    }
+
+    getListState() {
+        return this.state;
+    }
+
+    setMaxId(id) {
+        this.maxId = id;
+    }
+
+    /**
+     * L'id est la seule chose que le back doit determiner. Je génère
+     * le futur ID en js pour ne pas a avoir à attendre la réponse du 
+     * back.
+     */
+    getMaxId() {
+        return this.maxId;
+    }
+
+    incMaxId() {
+        this.maxId += 1;
+    }
 }
