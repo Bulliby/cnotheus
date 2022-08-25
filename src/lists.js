@@ -40,9 +40,9 @@ export default class Lists
         });
     }
 
-    fetchProjects() {
-        return this.getOneList(this.listSelected).then(res => {
-            this.projects = res.projects;
-        });
-    }
+    // fetchProjects() {
+    //     return this.getOneList(this.listSelected).then(res => {
+    //         this.projects = res.projects;
+    //     });
+    // }
 }

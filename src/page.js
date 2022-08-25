@@ -7,15 +7,5 @@ export default class Page
         var template = Handlebars.templates.lists;
         el.innerHTML = template(data);
     }
-
-    /**
-     * Used to hide and show specified block and act like a router
-     */
-    renderPage() {
-        document.querySelectorAll('section').forEach(el => {
-            el.style.display = "none";
-        });
-        document.getElementById(this.routerId).style.display = "block";
-    }
 }
 

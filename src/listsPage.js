@@ -17,13 +17,12 @@ export default class ListsPage extends Page
 
             let data = { Lists: res.lists };
             this.refreshTemplate(data, 'lists-template');
+
             let addBtn = document.getElementById('js-add');
             addBtn.addEventListener('click', this.addList.bind(this));
             document.querySelectorAll('.list-name-container').forEach(el => {
                 el.addEventListener('click', e => this.selectList(e));
             });
-            this.routerId = 'lists-page';
-            this.renderPage();
         });
     }
 
@@ -44,8 +43,8 @@ export default class ListsPage extends Page
     selectList(e) {
         let list = e.currentTarget;
         this.lists.listSelected = list.dataset.listId;
-        this.routerId = 'notes-page';
-        this.renderPage();
-        this.lists.fetchProjects();
+        window.router.routerId = 'notes-page';
+        window.router.changePage();
+        //this.lists.fetchProjects();
     }
 }

@@ -1,5 +1,7 @@
-import ListsPage  from "./listsPage.js"
+import Router from './router.js'
 
 window.onload = (event) => { 
-    new ListsPage();
+    window.router = new Router();
+    window.router.routerId = 'lists-page';
+    window.router.changePage();
 };
