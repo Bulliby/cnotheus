@@ -1,6 +1,12 @@
-html, body {
+* {
+    margin-block-start: 0;
+    margin-block-end: 0;
+}
+
+html, body, section  {
     height: 100%;
     background-color: #202124;
+    margin: 0;
 }
 
 .list-form-container {
@@ -31,7 +37,7 @@ html, body {
     border-radius: 4px;
 }
 
-section {
+#lists-template {
 	min-height: 70%;
 }
 
@@ -89,4 +95,8 @@ section {
     position: relative;
     width: inherit;
     height: inherit;
+}
+
+section {
+    display: none;
 }
