@@ -29,15 +29,18 @@ export default class ListsPage extends Page
     addList() {
         let state = this.lists.state;
         let input = document.getElementById('js-list-name-input');
-        this.lists.maxId += 1;
-        state.push({'id': this.lists.maxId, 'name': input.value });
+        state.push({'name': input.value });
         this.lists.state = state;
 
         let data = { Lists: state };
         this.refreshTemplate(data, 'lists-template');
-        this.lists.addList(input.value);
-        document.querySelector('[data-list-id="'+this.lists.maxId+'"]')
-            .addEventListener('click', e => this.selectList(e));
+        this.lists.addList(input.value).then(id => {
+            let el = state.pop();
+            el.id = id; 
+            state.push(el);
+            this.refreshTemplate(data, 'lists-template');
+            document.querySelector('[data-list-id="'+id+'"]').addEventListener('click', e => this.selectList(e));
+        });
     }
 
     selectList(e) {

@@ -5,9 +5,7 @@ export default class Lists
     constructor() {
         this.listSelected = 1;
         this.state = null;
-         // L'id est la seule chose que le back doit determiner. Je génère
-         // le futur ID en js pour ne pas a avoir à attendre la réponse du back.
-        this.maxId = null;
+        this.domain = "http://notheus"
         this.projects = null;
     }
 
@@ -15,7 +13,7 @@ export default class Lists
     {
         return new customXhr({
             verb: "GET",
-            url: "http://projects/project/list"
+            url: `${this.domain}/project/list`
         });
     }
 
@@ -26,7 +24,7 @@ export default class Lists
         }
         return new customXhr({
             verb: "POST",
-            url: "http://projects/project/list/add",
+            url: `${this.domain}/project/list/add`,
             data: JSON.stringify({
                 name: name
             })
@@ -36,7 +34,7 @@ export default class Lists
     getOneList(id) {
         return new customXhr({
             verb: "GET",
-            url: "http://projects/project/list/"+id,
+            url: `${this.domain}/project/list/${id}`,
         });
     }
 
