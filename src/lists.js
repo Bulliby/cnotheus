@@ -13,7 +13,7 @@ export default class Lists
     {
         return new customXhr({
             verb: "GET",
-            url: `${this.domain}/project/list`
+            url: `${this.domain}/list/`
         });
     }
 
@@ -24,7 +24,7 @@ export default class Lists
         }
         return new customXhr({
             verb: "POST",
-            url: `${this.domain}/project/list/add`,
+            url: `${this.domain}/list/`,
             data: JSON.stringify({
                 name: name
             })
@@ -34,7 +34,7 @@ export default class Lists
     getOneList(id) {
         return new customXhr({
             verb: "GET",
-            url: `${this.domain}/project/list/${id}`,
+            url: `${this.domain}/project/list/${id}/`,
         });
     }
 

@@ -1,5 +1,6 @@
 import Page  from "./page.js"
 import Lists  from "./lists.js"
+import DragAndDrop  from "./DragAndDrop.js"
 
 export default class ListsPage extends Page
 {
@@ -13,16 +14,18 @@ export default class ListsPage extends Page
         this.lists.getLists().then((res) => {
             res = JSON.parse(res);
             this.lists.state = res.lists;
-            this.lists.maxId = res.maxId;
 
             let data = { Lists: res.lists };
             this.refreshTemplate(data, 'lists-template');
 
             let addBtn = document.getElementById('js-add');
             addBtn.addEventListener('click', this.addList.bind(this));
-            document.querySelectorAll('.list-name-container').forEach(el => {
-                el.addEventListener('click', e => this.selectList(e));
+            let listElements = document.querySelectorAll('.list-name-container');
+            listElements.forEach(el => {
+                el.addEventListener('dblclick', e => this.selectList(e));
             });
+
+            new DragAndDrop(listElements);
         });
     }
 
@@ -39,7 +42,10 @@ export default class ListsPage extends Page
             el.id = id; 
             state.push(el);
             this.refreshTemplate(data, 'lists-template');
-            document.querySelector('[data-list-id="'+id+'"]').addEventListener('click', e => this.selectList(e));
+
+            let newElement = document.querySelector('[data-list-id="'+id+'"]');
+            newElement.addEventListener('dblclick', e => this.selectList(e));
+            new DragAndDrop([newElement]);
         });
     }
 
