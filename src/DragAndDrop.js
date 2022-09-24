@@ -6,11 +6,15 @@ export default class DragAndDrop
         this.initialX = null;
         this.initialY = null;
         this.draggedEl = null;
+        this.max = null;
+        this.maxEl = null;
 
         this.lists.forEach(el => {
             el.addEventListener('mousedown', e => this.mouseDown(e, el));
             document.addEventListener('mousemove', e => this.mouseMove(e));
         });
+
+        document.addEventListener('mouseup', e => this.mouseUp(e));
     }
 
     mouseDown(e, el) {
@@ -19,14 +23,14 @@ export default class DragAndDrop
         this.initialX = e.clientX + 'px';
         this.initialY = e.clientY + 'px';
         this.createDraggedElement(e.currentTarget);
-        document.addEventListener('mouseup', e => this.mouseUp(e));
     }
 
     mouseUp(e) {
-        console.log('mouseup');
         e.preventDefault();
         this.isDragging = false;
+        let rect = this.draggedEl.getBoundingClientRect();
         this.draggedEl.remove();
+        this.drop(rect);
     }
 
     mouseMove(e) {
@@ -56,5 +60,90 @@ export default class DragAndDrop
         this.draggedEl.style.width = rect.width + 'px';
         this.draggedEl.append(name);
         document.body.append(this.draggedEl);
+    }
+
+    drop(rect) {
+        let elDraggedX = rect.left;
+        let elDraggedY = rect.top;
+        let elDraggedX2 = rect.right;
+        let elDraggedY2 = rect.bottom;
+            
+        this.lists.forEach((el) => {
+            let rect = el.getBoundingClientRect();
+            this.checkCornertTopLeft(elDraggedX, elDraggedY, rect, el);
+            this.checkCornertTopRight(elDraggedX2, elDraggedY, rect, el);
+            this.checkCornertBottomLeft(elDraggedX, elDraggedY2, rect, el);
+            this.checkCornertBottomRight(elDraggedX2, elDraggedY2, rect, el);
+        });
+        console.log(this.maxEl);
+        this.max = 0;
+    }
+
+    checkCornertTopLeft(elDraggedX, elDraggedY, rect, el)
+    {
+        if (elDraggedX >= rect.left && elDraggedX <= rect.right) 
+        {
+            if (elDraggedY >= rect.top && elDraggedY <= rect.bottom)
+            {
+                let X = rect.right - elDraggedX;
+                let Y = rect.bottom - elDraggedY;
+                let XxY = X * Y;
+                if (XxY > this.max)  {
+                    this.max = XxY;
+                    this.maxEl = el;
+                }
+            }
+        }
+    }
+
+    checkCornertTopRight(elDraggedX, elDraggedY, rect, el)
+    {
+        if (elDraggedX >= rect.left && elDraggedX <= rect.right) 
+        {
+            if (elDraggedY >= rect.top && elDraggedY <= rect.bottom)
+            {
+                let X = elDraggedX - rect.left;
+                let Y = rect.bottom - elDraggedY;
+                let XxY = X * Y;
+                if (XxY > this.max)  {
+                    this.max = XxY;
+                    this.maxEl = el;
+                }
+            }
+        }
+    }
+
+    checkCornertBottomLeft(elDraggedX, elDraggedY, rect, el)
+    {
+        if (elDraggedX >= rect.left && elDraggedX <= rect.right) 
+        {
+            if (elDraggedY >= rect.top && elDraggedY <= rect.bottom)
+            {
+                let X = rect.right - elDraggedX;
+                let Y = elDraggedY - rect.top;
+                let XxY = X * Y;
+                if (XxY > this.max)  {
+                    this.max = XxY;
+                    this.maxEl = el;
+                }
+            }
+        }
+    }
+
+    checkCornertBottomRight(elDraggedX, elDraggedY, rect, el)
+    {
+        if (elDraggedX >= rect.left && elDraggedX <= rect.right) 
+        {
+            if (elDraggedY >= rect.top && elDraggedY <= rect.bottom)
+            {
+                let X = elDraggedX - rect.left;
+                let Y = elDraggedY - rect.top;
+                let XxY = X * Y;
+                if (XxY > this.max)  {
+                    this.max = XxY;
+                    this.maxEl = el;
+                }
+            }
+        }
     }
 }
