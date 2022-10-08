@@ -11,9 +11,9 @@ export default class DragAndDrop
 
         this.lists.forEach(el => {
             el.addEventListener('mousedown', e => this.mouseDown(e, el));
-            document.addEventListener('mousemove', e => this.mouseMove(e));
         });
 
+        document.addEventListener('mousemove', e => this.mouseMove(e));
         document.addEventListener('mouseup', e => this.mouseUp(e));
     }
 
@@ -43,6 +43,15 @@ export default class DragAndDrop
             this.draggedEl.style.top = `${parseInt(this.draggedEl.style.top.replace('px', ''), 10) + (cursorPositionY - this.initialY)}px`;
             this.initialX = cursorPositionX;
             this.initialY = cursorPositionY;
+            let rect = this.draggedEl.getBoundingClientRect();
+            if (rect.bottom > window.innerHeight && (window.scrollY + window.innerHeight) < document.body.scrollHeight) {
+                window.scroll(0, window.scrollY + 1);
+                this.draggedEl.style.top = `${parseInt(this.draggedEl.style.top.replace('px', ''), 10) + (1)}px`;
+            }
+            if (rect.top < 0 && window.scrollY > 0) {
+                window.scroll(0, window.scrollY - 1);
+                this.draggedEl.style.top = `${parseInt(this.draggedEl.style.top.replace('px', ''), 10) - (1)}px`;
+            }
         }
     }
 
@@ -76,73 +85,98 @@ export default class DragAndDrop
             this.checkCornertBottomRight(elDraggedX2, elDraggedY2, rect, el);
         });
         console.log(this.maxEl);
+        // console.log(this.max);
         this.max = 0;
     }
 
     checkCornertTopLeft(elDraggedX, elDraggedY, rect, el)
     {
-        if (elDraggedX >= rect.left && elDraggedX <= rect.right) 
+        let top = Math.floor(rect.top);
+        let bottom = Math.ceil(rect.bottom);
+        let left = Math.floor(rect.left);
+        let right = Math.ceil(rect.right);
+
+        if (elDraggedX >= left && elDraggedX <= right && elDraggedY >= top && elDraggedY <= bottom) 
         {
-            if (elDraggedY >= rect.top && elDraggedY <= rect.bottom)
-            {
-                let X = rect.right - elDraggedX;
-                let Y = rect.bottom - elDraggedY;
-                let XxY = X * Y;
-                if (XxY > this.max)  {
-                    this.max = XxY;
-                    this.maxEl = el;
-                }
+            // console.log(left);
+            // console.log(right);
+            // console.log(elDraggedY);
+            // console.log(elDraggedX);
+            let X = rect.right - elDraggedX;
+            let Y = rect.bottom - elDraggedY;
+            let XxY = X * Y;
+            if (XxY > this.max)  {
+                this.max = XxY;
+                this.maxEl = el;
             }
         }
     }
 
     checkCornertTopRight(elDraggedX, elDraggedY, rect, el)
     {
-        if (elDraggedX >= rect.left && elDraggedX <= rect.right) 
+        let top = Math.floor(rect.top);
+        let bottom = Math.ceil(rect.bottom);
+        let left = Math.floor(rect.left);
+        let right = Math.ceil(rect.right);
+
+        if (elDraggedX >= left && elDraggedX <= right && elDraggedY >= top && elDraggedY <= bottom) 
         {
-            if (elDraggedY >= rect.top && elDraggedY <= rect.bottom)
-            {
-                let X = elDraggedX - rect.left;
-                let Y = rect.bottom - elDraggedY;
-                let XxY = X * Y;
-                if (XxY > this.max)  {
-                    this.max = XxY;
-                    this.maxEl = el;
-                }
+            // console.log(left);
+            // console.log(right);
+            // console.log(elDraggedY);
+            // console.log(elDraggedX);
+            let X = elDraggedX - rect.left;
+            let Y = rect.bottom - elDraggedY;
+            let XxY = X * Y;
+            if (XxY > this.max)  {
+                this.max = XxY;
+                this.maxEl = el;
             }
         }
     }
 
     checkCornertBottomLeft(elDraggedX, elDraggedY, rect, el)
     {
-        if (elDraggedX >= rect.left && elDraggedX <= rect.right) 
+        let top = Math.floor(rect.top);
+        let bottom = Math.ceil(rect.bottom);
+        let left = Math.floor(rect.left);
+        let right = Math.ceil(rect.right);
+
+        if (elDraggedX >= left && elDraggedX <= right && elDraggedY >= top && elDraggedY <= bottom) 
         {
-            if (elDraggedY >= rect.top && elDraggedY <= rect.bottom)
-            {
-                let X = rect.right - elDraggedX;
-                let Y = elDraggedY - rect.top;
-                let XxY = X * Y;
-                if (XxY > this.max)  {
-                    this.max = XxY;
-                    this.maxEl = el;
-                }
+            // console.log(left);
+            // console.log(right);
+            // console.log(elDraggedY);
+            // console.log(elDraggedX);
+            let X = rect.right - elDraggedX;
+            let Y = elDraggedY - rect.top;
+            let XxY = X * Y;
+            if (XxY > this.max)  {
+                this.max = XxY;
+                this.maxEl = el;
             }
         }
     }
 
     checkCornertBottomRight(elDraggedX, elDraggedY, rect, el)
     {
-        if (elDraggedX >= rect.left && elDraggedX <= rect.right) 
+        let top = Math.floor(rect.top);
+        let bottom = Math.ceil(rect.bottom);
+        let left = Math.floor(rect.left);
+        let right = Math.ceil(rect.right);
+
+        if (elDraggedX >= left && elDraggedX <= right && elDraggedY >= top && elDraggedY <= bottom) 
         {
-            if (elDraggedY >= rect.top && elDraggedY <= rect.bottom)
-            {
-                let X = elDraggedX - rect.left;
-                let Y = elDraggedY - rect.top;
-                let XxY = X * Y;
-                if (XxY > this.max)  {
-                    this.max = XxY;
-                    this.maxEl = el;
-                }
+            // console.log(left);
+            // console.log(right);
+            // console.log(elDraggedY);
+            // console.log(elDraggedX);
+            let X = elDraggedX - rect.left;
+            let Y = elDraggedY - rect.top;
+            let XxY = X * Y;
+            if (XxY > this.max)  {
+                this.max = XxY;
+                this.maxEl = el;
             }
         }
     }

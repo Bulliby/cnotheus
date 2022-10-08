@@ -1,6 +1,6 @@
 import Page  from "./page.js"
 import Lists  from "./lists.js"
-import DragAndDrop  from "./DragAndDrop.js"
+import DragAndDrop  from "./dragAndDrop.js"
 
 export default class ListsPage extends Page
 {
