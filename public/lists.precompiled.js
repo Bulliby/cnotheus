@@ -8,11 +8,11 @@ templates['lists'] = template({"1":function(container,depth0,helpers,partials,da
         return undefined
     };
 
-  return "    <div class=\"list-name-container\" data-list-id=\""
+  return "   <div class=\"list-name-container\" data-list-id=\""
     + alias2(alias1((depth0 != null ? lookupProperty(depth0,"id") : depth0), depth0))
-    + "\">\n        <div class=\"list-icon-container\">\n            <span class=\"list-name\">"
+    + "\">\n       <div class=\"list-icon-container\">\n           <span class=\"list-name\">"
     + alias2(alias1((depth0 != null ? lookupProperty(depth0,"name") : depth0), depth0))
-    + "</span>\n            <img class=\"list-delete-icon\" src=\"../assets/images/close.png\"></img>\n            <img class=\"list-eye-icon\" src=\"../assets/images/eye.png\"></img>\n        </div>\n    </div>\n";
+    + "</span>\n           <img class=\"list-delete-icon\" src=\"../assets/images/close.png\"></img>\n           <img class=\"list-eye-icon\" src=\"../assets/images/eye.png\"></img>\n       </div>\n   </div>\n";
 },"compiler":[8,">= 4.3.0"],"main":function(container,depth0,helpers,partials,data) {
     var stack1, lookupProperty = container.lookupProperty || function(parent, propertyName) {
         if (Object.prototype.hasOwnProperty.call(parent, propertyName)) {

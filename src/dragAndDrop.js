@@ -9,12 +9,18 @@ export default class DragAndDrop
         this.max = null;
         this.maxEl = null;
 
+        this.bind();
+        document.addEventListener('mousemove', e => this.mouseMove(e));
+        document.addEventListener('mouseup', e => this.mouseUp(e));
+    }
+
+    bind() {
+        this.lists = document.querySelectorAll('.list-name-container');
+
         this.lists.forEach(el => {
             el.addEventListener('mousedown', e => this.mouseDown(e, el));
         });
 
-        document.addEventListener('mousemove', e => this.mouseMove(e));
-        document.addEventListener('mouseup', e => this.mouseUp(e));
     }
 
     mouseDown(e, el) {
@@ -45,12 +51,12 @@ export default class DragAndDrop
             this.initialY = cursorPositionY;
             let rect = this.draggedEl.getBoundingClientRect();
             if (rect.bottom > window.innerHeight && (window.scrollY + window.innerHeight) < document.body.scrollHeight) {
-                window.scroll(0, window.scrollY + 1);
-                this.draggedEl.style.top = `${parseInt(this.draggedEl.style.top.replace('px', ''), 10) + (1)}px`;
+                window.scroll(0, window.scrollY + 5);
+                this.draggedEl.style.top = `${parseInt(this.draggedEl.style.top.replace('px', ''), 10) + (5)}px`;
             }
             if (rect.top < 0 && window.scrollY > 0) {
-                window.scroll(0, window.scrollY - 1);
-                this.draggedEl.style.top = `${parseInt(this.draggedEl.style.top.replace('px', ''), 10) - (1)}px`;
+                window.scroll(0, window.scrollY - 5);
+                this.draggedEl.style.top = `${parseInt(this.draggedEl.style.top.replace('px', ''), 10) - (5)}px`;
             }
         }
     }

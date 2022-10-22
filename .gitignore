@@ -1,1 +1,4 @@
 docker/.env
+node_modules
+.env
+public/app.js
