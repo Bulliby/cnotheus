@@ -25,7 +25,7 @@ export default class ListsPage extends Page
                 el.addEventListener('dblclick', e => this.selectList(e));
             });
 
-            new DragAndDrop(listElements);
+            this.dragAndDrop = new DragAndDrop(listElements);
         });
     }
 
@@ -45,7 +45,7 @@ export default class ListsPage extends Page
 
             let newElement = document.querySelector('[data-list-id="'+id+'"]');
             newElement.addEventListener('dblclick', e => this.selectList(e));
-            new DragAndDrop([newElement]);
+            this.dragAndDrop.bind();
         });
     }
 
@@ -54,6 +54,5 @@ export default class ListsPage extends Page
         this.lists.listSelected = list.dataset.listId;
         window.router.routerId = 'notes-page';
         window.router.changePage();
-        //this.lists.fetchProjects();
     }
 }

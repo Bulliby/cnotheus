@@ -5,7 +5,7 @@ export default class Lists
     constructor() {
         this.listSelected = 1;
         this.state = null;
-        this.domain = "http://notheus"
+        this.domain = process.env.URL
         this.projects = null;
     }
 
@@ -37,10 +37,4 @@ export default class Lists
             url: `${this.domain}/project/list/${id}/`,
         });
     }
-
-    // fetchProjects() {
-    //     return this.getOneList(this.listSelected).then(res => {
-    //         this.projects = res.projects;
-    //     });
-    // }
 }

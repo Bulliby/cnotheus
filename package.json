@@ -1,0 +1,34 @@
+{
+  "name": "cnotheus",
+  "version": "0.0.1",
+  "description": "Take my notes",
+  "main": "app.js",
+  "scripts": {
+     "watch": "handlebars templates/*.handlebars -f public/lists.precompiled.js && webpack -w --config ./build/webpack.js",  
+     "build": "handlebars templates/*.handlebars -f public/lists.precompiled.js && webpack --config ./build/webpack.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Bulliby/client-projects.git"
+  },
+  "keywords": [
+    "Notes",
+    "Drage&Drop",
+    "router"
+  ],
+  "author": "Guillaume Wells",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/Bulliby/client-projects/issues"
+  },
+  "homepage": "https://github.com/Bulliby/client-projects#readme",
+  "dependencies": {
+    "dotenv": "^16.0.3",
+    "handlebars": "^4.7.7",
+    "webpack": "^5.74.0"
+  },
+  "devDependencies": {
+    "handlebars-webpack-plugin": "^2.2.1",
+    "webpack-cli": "^4.10.0"
+  }
+}
