@@ -20,12 +20,17 @@ export default class ListsPage extends Page
 
             let addBtn = document.getElementById('js-add');
             addBtn.addEventListener('click', this.addList.bind(this));
+            this.bind(); 
             let listElements = document.querySelectorAll('.list-name-container');
-            listElements.forEach(el => {
-                el.addEventListener('dblclick', e => this.selectList(e));
-            });
-
             this.dragAndDrop = new DragAndDrop(listElements);
+        });
+    }
+
+    bind() {
+        let listElements = document.querySelectorAll('.list-name-container');
+
+        listElements.forEach(el => {
+            el.addEventListener('dblclick', e => this.selectList(e));
         });
     }
 
@@ -43,8 +48,7 @@ export default class ListsPage extends Page
             state.push(el);
             this.refreshTemplate(data, 'lists-template');
 
-            let newElement = document.querySelector('[data-list-id="'+id+'"]');
-            newElement.addEventListener('dblclick', e => this.selectList(e));
+            this.bind();
             this.dragAndDrop.bind();
         });
     }

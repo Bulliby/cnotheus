@@ -33,6 +33,8 @@ export default class DragAndDrop
 
     mouseUp(e) {
         e.preventDefault();
+        if (e.target.id == 'dragged-el' === false)
+            return;
         this.isDragging = false;
         let rect = this.draggedEl.getBoundingClientRect();
         this.draggedEl.remove();

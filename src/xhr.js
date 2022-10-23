@@ -10,8 +10,10 @@ export default class customXhr
     returnPromise() {
         return new Promise((resolve, reject) => {
             this.xhr.open(this.params.verb, this.params.url);
-            this.xhr.setRequestHeader('Authorization', 'Basic ' + process.env.TOKEN);
-            this.xhr.withCredentials = true;
+            if (process.env.ENV == 'prod') {
+                this.xhr.setRequestHeader('Authorization', 'Basic ' + process.env.TOKEN);
+                this.xhr.withCredentials = true;
+            }
             this.xhr.onload = () => {
                 if (this.xhr.status >= 200 && this.xhr.status < 300) {
                     resolve(this.xhr.response);
