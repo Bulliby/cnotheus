@@ -38,11 +38,8 @@ html, body, section  {
     border-radius: 4px;
 }
 
-#lists-template {
+#cardsPage {
 	min-height: 70%;
-}
-
-#lists-template {
     display: grid;
     grid-template-columns: repeat(5, auto);
     gap: 1%;
@@ -96,6 +93,7 @@ html, body, section  {
     position: relative;
     width: inherit;
     height: inherit;
+    pointer-events: none;
 }
 
 section {
