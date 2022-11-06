@@ -1,6 +1,6 @@
 import customXhr from "./xhr.js"
 
-export default class Lists
+export default class XhrCards
 {
     constructor() {
         this.listSelected = 1;

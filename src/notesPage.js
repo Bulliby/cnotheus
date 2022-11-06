@@ -1,9 +1,5 @@
-import Page  from "./page.js"
-
-export default class NotesPage extends Page
+export default class NotesPage
 {
     constructor() {
-        super();
-        console.log('NotesPage');
     }
 }
