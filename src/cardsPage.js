@@ -5,8 +5,9 @@ export default class CardsPage
 {
     constructor() {
         this.xhrCards = new XhrCards();
-        this.dragAndDrop = new DragAndDrop();
+        this.dragAndDrop = new DragAndDrop(this.xhrCards, this);
         this.onLoad();
+        this.requestAdd = false;
     }
 
     onLoad() {
@@ -14,7 +15,7 @@ export default class CardsPage
             res = JSON.parse(res);
             this.xhrCards.state = res.lists;
 
-            let data = { Lists: res.lists };
+            let data = { Cards: res.lists };
             this.refreshTemplate(data);
 
             let addBtn = document.getElementById('js-add');
@@ -24,18 +25,21 @@ export default class CardsPage
     }
 
     addList() {
+        this.requestAdd = true;
         let state = this.xhrCards.state;
         let input = document.getElementById('js-list-name-input');
-        state.push({'name': input.value });
+        let card = {'name': input.value, 'position': state.length + 1, 'id' : null};
+        state.push(card);
         this.xhrCards.state = state;
 
-        let data = { Lists: state };
+        let data = { Cards: state };
         this.refreshTemplate(data);
-        this.xhrCards.addList(input.value).then(id => {
-            let el = state.pop();
-            el.id = id; 
-            state.push(el);
+        this.xhrCards.addList(card).then(id => {
+            let card = state.pop();
+            card.id = Number(id); 
+            state.push(card);
             this.refreshTemplate(data);
+            this.requestAdd = false;
         });
     }
 
@@ -53,6 +57,9 @@ export default class CardsPage
         let el = document.getElementById('cardsPage');
         //lists est ici le prefix du fichier "lists.handlebars"
         var template = Handlebars.templates.lists;
+        data.Cards.sort((a, b) => {
+            return a.position > b.position;
+        });
         el.innerHTML = template(data);
 		this.dragAndDrop.setCards();
         this.bindEvents();
@@ -64,4 +71,8 @@ export default class CardsPage
 		});
 		this.dragAndDrop.eventCards();
 	}
+
+    getRequestAdd() {
+        return this.requestAdd;
+    }
 }

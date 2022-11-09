@@ -17,8 +17,8 @@ export default class XhrCards
         });
     }
 
-    addList(name) {
-        if (name.length == 0) {
+    addList(card) {
+        if (card.name.length == 0) {
             alert('validation');
             return;
         }
@@ -26,7 +26,8 @@ export default class XhrCards
             verb: "POST",
             url: `${this.domain}/list/`,
             data: JSON.stringify({
-                name: name
+                name: card.name,
+                position: card.position 
             })
         });
     }
@@ -35,6 +36,14 @@ export default class XhrCards
         return new customXhr({
             verb: "GET",
             url: `${this.domain}/project/list/${id}/`,
+        });
+    }
+
+    setPositions(cards) {
+        return new customXhr({
+            verb: "POST",
+            url: `${this.domain}/list/positions`,
+            data: JSON.stringify(this.state)
         });
     }
 }

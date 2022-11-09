@@ -2,3 +2,4 @@ docker/.env
 node_modules
 .env
 public/app.js
+public/lists.precompiled.js

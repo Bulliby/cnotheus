@@ -1,6 +1,6 @@
 export default class DragAndDrop
 {
-    constructor() {
+    constructor(xhrCards, page) {
 		this.cards = null;
         this.isDragging = false;
         this.initialX = null;
@@ -8,6 +8,9 @@ export default class DragAndDrop
         this.draggedEl = null;
         this.max = null;
         this.maxEl = null;
+        this.origin = null;
+        this.page = page;
+        this.xhrCards = xhrCards;
 
         document.addEventListener('mousemove', e => this.mouseMove(e));
         document.addEventListener('mouseup', e => this.mouseUp(e));
@@ -18,6 +21,7 @@ export default class DragAndDrop
         this.isDragging = true;
         this.initialX = e.clientX + 'px';
         this.initialY = e.clientY + 'px';
+        this.origin = e.currentTarget;
         this.draggedEl = this.createDraggedElement(e.currentTarget);
         document.body.append(this.draggedEl);
     }
@@ -27,14 +31,39 @@ export default class DragAndDrop
         this.isDragging = false;
         if (e.target.id == 'dragged-el' === false) {
             this.maxEl == null;
-            this.draggedEl.remove();
+            if (this.draggedEl) {
+                this.draggedEl.remove();
+            }
             return;
         }
         let rect = this.draggedEl.getBoundingClientRect();
         this.draggedEl.remove();
         this.drop(rect);
+        let originPos = Number(this.origin.dataset.listPosition);
+        let targetPos = Number(this.maxEl.dataset.listPosition);
+        if (targetPos > originPos) {
+            for (let i = targetPos; i != originPos; i--) {
+                this.cards[i - 1].dataset.listPosition -= 1;
+                this.xhrCards.state[i - 1]['position'] -= 1;
+            }
+            this.cards[originPos - 1].dataset.listPosition = targetPos;
+            this.xhrCards.state[originPos - 1]['position'] = targetPos;
+        } else if (targetPos < originPos) {
+            for (let i = targetPos; i != originPos; i++) {
+                this.cards[i - 1].dataset.listPosition = `${Number(this.cards[i - 1].dataset.listPosition) + Number(1)}`;
+                this.xhrCards.state[i - 1]['position'] += 1;
+            }
+            this.cards[originPos - 1].dataset.listPosition = `${Number(targetPos)}`;
+            this.xhrCards.state[originPos - 1]['position'] = targetPos;
+        }
+        this.page.refreshTemplate({ Cards: this.xhrCards.state });
+        let timer = setInterval(() => {
+            if (!this.page.getRequestAdd()) {
+                this.xhrCards.setPositions();
+                clearInterval(timer);
+            }
+        }, 20);
     }
-
 
     mouseMove(e) {
         e.preventDefault();
@@ -96,7 +125,7 @@ export default class DragAndDrop
             this.checkCornertBottomLeft(elDraggedX, elDraggedY2, rect, el);
             this.checkCornertBottomRight(elDraggedX2, elDraggedY2, rect, el);
         });
-        console.log(this.maxEl);
+        //console.log(this.maxEl);
         this.max = 0;
     }
 

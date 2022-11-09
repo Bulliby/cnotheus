@@ -5,4 +5,4 @@ services:
     ports:
       - "${LISTENING_IP}:23006:80"
     volumes:
-      - "${SITE_PATH}:/srv/http/"
+      - "${PROJECT_PATH}:/srv/http/"
