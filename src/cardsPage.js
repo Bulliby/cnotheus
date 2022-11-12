@@ -58,7 +58,7 @@ export default class CardsPage
         //lists est ici le prefix du fichier "lists.handlebars"
         var template = Handlebars.templates.lists;
         data.Cards.sort((a, b) => {
-            return a.position > b.position;
+            return (a.position > b.position) ? 1 : -1;
         });
         el.innerHTML = template(data);
 		this.dragAndDrop.setCards();
