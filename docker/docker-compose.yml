@@ -1,7 +1,7 @@
 name: cnotheus
 services:
   server:
-    image: "waxer/notheus:8.1"
+    image: "waxer/cnotheus"
     ports:
       - "${LISTENING_IP}:23006:80"
     volumes:
