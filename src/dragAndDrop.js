@@ -39,23 +39,10 @@ export default class DragAndDrop
         let rect = this.draggedEl.getBoundingClientRect();
         this.draggedEl.remove();
         this.drop(rect);
-        let originPos = Number(this.origin.dataset.listPosition);
-        let targetPos = Number(this.maxEl.dataset.listPosition);
-        if (targetPos > originPos) {
-            for (let i = targetPos; i != originPos; i--) {
-                this.cards[i - 1].dataset.listPosition -= 1;
-                this.xhrCards.state[i - 1]['position'] -= 1;
-            }
-            this.cards[originPos - 1].dataset.listPosition = targetPos;
-            this.xhrCards.state[originPos - 1]['position'] = targetPos;
-        } else if (targetPos < originPos) {
-            for (let i = targetPos; i != originPos; i++) {
-                this.cards[i - 1].dataset.listPosition = `${Number(this.cards[i - 1].dataset.listPosition) + Number(1)}`;
-                this.xhrCards.state[i - 1]['position'] += 1;
-            }
-            this.cards[originPos - 1].dataset.listPosition = `${Number(targetPos)}`;
-            this.xhrCards.state[originPos - 1]['position'] = targetPos;
-        }
+        this.reOrderCards((i, inc) => {
+            this.cards[i - 1].dataset.listPosition += inc;
+            this.xhrCards.state[i - 1]['position'] += inc;
+        });
         this.page.refreshTemplate({ Cards: this.xhrCards.state });
         let timer = setInterval(() => {
             if (!this.page.getRequestAdd()) {
@@ -63,6 +50,23 @@ export default class DragAndDrop
                 clearInterval(timer);
             }
         }, 20);
+    }
+
+    reOrderCards(callback) {
+        let originPos = Number(this.origin.dataset.listPosition);
+        let targetPos = Number(this.maxEl.dataset.listPosition);
+
+        if (targetPos > originPos) {
+            for (let i = targetPos; i != originPos; i--) {
+                callback(i, -1);
+            }
+        } else if (targetPos < originPos) {
+            for (let i = targetPos; i != originPos; i++) {
+                callback(i, +1);
+            }
+        }
+        this.cards[originPos - 1].dataset.listPosition = targetPos;
+        this.xhrCards.state[originPos - 1]['position'] = targetPos;
     }
 
     mouseMove(e) {

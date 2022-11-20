@@ -66,9 +66,6 @@ export default class CardsPage
     }
 
 	bindEvents() {
-        this.dragAndDrop.getCards().forEach(el => {
-            el.addEventListener('dblclick', e => this.selectList(e));
-		});
 		this.dragAndDrop.eventCards();
 	}
 

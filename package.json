@@ -4,8 +4,8 @@
   "description": "Take my notes",
   "main": "app.js",
   "scripts": {
-     "watch": "handlebars templates/*.handlebars -f public/lists.precompiled.js && webpack -w --config ./build/webpack.js",  
-     "build": "handlebars templates/*.handlebars -f public/lists.precompiled.js && webpack --config ./build/webpack.js"
+    "watch": "handlebars templates/*.handlebars -f public/lists.precompiled.js && webpack -w --config ./build/webpack.js",
+    "build": "handlebars templates/*.handlebars -f public/lists.precompiled.js && webpack --config ./build/webpack.js"
   },
   "repository": {
     "type": "git",
