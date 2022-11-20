@@ -208,6 +208,13 @@ export default class DragAndDrop
         this.getCards().forEach(el => {
             el.addEventListener('mousedown', e => this.mouseDown(e, el));
         });
+
+        document.addEventListener('wheel', (e) => {
+            if (this.isDragging == true) {
+                e.stopPropagation();
+                e.preventDefault();
+            }
+        }, { 'capture' : true, 'once': false, 'passive': false });
     }
 
     getCards() {
