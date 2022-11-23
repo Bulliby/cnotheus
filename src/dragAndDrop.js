@@ -18,6 +18,8 @@ export default class DragAndDrop
 
     mouseDown(e, el) {
         e.preventDefault();
+        if (e.button != 0)
+            return;
         this.isDragging = true;
         this.initialX = e.clientX + 'px';
         this.initialY = e.clientY + 'px';
@@ -28,6 +30,8 @@ export default class DragAndDrop
 
     mouseUp(e) {
         e.preventDefault();
+        if (this.isDragging === false)
+            return;
         this.isDragging = false;
         if (e.target.id == 'dragged-el' === false) {
             this.maxEl == null;
@@ -202,7 +206,7 @@ export default class DragAndDrop
     }
 
     /**
-     * After innerHTML we loose events, and DOM "id" that's we redo querySelector
+     * After innerHTML we loose events, and DOM "id" that's why we redo querySelector
      */
     eventCards() {
         this.getCards().forEach(el => {
