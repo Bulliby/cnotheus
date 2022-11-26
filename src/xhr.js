@@ -11,7 +11,6 @@ export default class customXhr
         return new Promise((resolve, reject) => {
             this.xhr.open(this.params.verb, this.params.url);
             if (process.env.ENV == 'prod') {
-                this.xhr.setRequestHeader('Authorization', 'Basic ' + process.env.TOKEN);
                 this.xhr.setRequestHeader('Content-Type', 'application/json');
                 this.xhr.withCredentials = true;
             }
