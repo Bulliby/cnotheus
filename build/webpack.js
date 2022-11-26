@@ -10,16 +10,9 @@ const envKeys = Object.keys(env).reduce((prev, next) => {
     return prev
 }, {});
 
-//
-//
-// let handlebars = new HandlebarsPlugin({
-//     entry: path.join(process.cwd(), "templates", "lists.handlebars"),
-//     output: path.join(process.cwd(), "public", "lists.precompiled.js"),
-// });
-
 module.exports = {
     entry: './src/app.js',
-    mode: 'development',
+    mode: `${process.env.ENV}`,
     output: {
         path: path.resolve(__dirname, '../public'),
         filename: 'app.js'
