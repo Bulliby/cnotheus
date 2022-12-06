@@ -9,4 +9,4 @@ The application is entirely in vanilla JS and have only two dependencies :
 
 The front rely on a Symfony back-end [here](https://github.com/Bulliby/notheus).
 
-You can test it [here](cnotheus.wellsguillaume.fr)
+You can test it [here](https://cnotheus.wellsguillaume.fr)
