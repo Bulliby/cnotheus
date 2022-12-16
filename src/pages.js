@@ -1,6 +1,8 @@
 import CardsPage from './cardsPage.js'
-import NotesPage from './notesPage.js'
 
+/*
+ * Custom routeur, not part of the project anymore
+ */
 export default class Pages
 {
     constructor() {
@@ -8,7 +10,7 @@ export default class Pages
             el.style.display = "none";
         });
 
-		this.pages = { 'cardsPage' : new CardsPage(), 'notesPage' : new NotesPage() };
+		this.pages = { 'cardsPage' : new CardsPage() };
 		this.getPage('cardsPage');
     }
 

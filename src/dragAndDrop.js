@@ -41,13 +41,23 @@ export default class DragAndDrop
             return;
         }
         let rect = this.draggedEl.getBoundingClientRect();
+        let state = this.xhrCards.getState();
+
         this.draggedEl.remove();
         this.drop(rect);
+
         this.reOrderCards((i, inc) => {
             this.cards[i - 1].dataset.listPosition += inc;
-            this.xhrCards.state[i - 1]['position'] += inc;
+            state[i - 1]['position'] += inc;
         });
-        this.page.refreshTemplate({ Cards: this.xhrCards.state });
+
+        this.xhrCards.setState(state);
+        this.page.refreshTemplate({ Cards: state });
+
+        /**
+         * If we are already adding a card we can't set the
+         * positions right now. We apply a delay.
+         */
         let timer = setInterval(() => {
             if (!this.page.getRequestAdd()) {
                 this.xhrCards.setPositions();
@@ -88,6 +98,10 @@ export default class DragAndDrop
         }
     }
 
+    /**
+     * For a smooth animation, when we move the card outside
+     * the viewport.
+     */
     animateScroll() { 
         let start = Date.now();
 
@@ -120,6 +134,10 @@ export default class DragAndDrop
         return clonedNode;
     }
 
+    /**
+     * Here we calculate for each corner which one is overlapping
+     * the more another card.
+     */
     drop(rect) {
         let elDraggedX = rect.left;
         let elDraggedY = rect.top;
@@ -133,7 +151,6 @@ export default class DragAndDrop
             this.checkCornertBottomLeft(elDraggedX, elDraggedY2, rect, el);
             this.checkCornertBottomRight(elDraggedX2, elDraggedY2, rect, el);
         });
-        //console.log(this.maxEl);
         this.max = 0;
     }
 
@@ -205,14 +222,14 @@ export default class DragAndDrop
         }
     }
 
-    /**
-     * After innerHTML we loose events, and DOM "id" that's why we redo querySelector
-     */
     eventCards() {
         this.getCards().forEach(el => {
             el.addEventListener('mousedown', e => this.mouseDown(e, el));
         });
 
+        /**
+         * We block scroll on dragging mode.
+         */
         document.addEventListener('wheel', (e) => {
             if (this.isDragging == true) {
                 e.stopPropagation();

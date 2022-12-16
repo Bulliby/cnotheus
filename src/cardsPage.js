@@ -13,24 +13,28 @@ export default class CardsPage
     onLoad() {
         this.xhrCards.getLists().then((res) => {
             res = JSON.parse(res);
-            this.xhrCards.state = res.lists;
+            this.xhrCards.setState(res.lists);
 
             let data = { Cards: res.lists };
             this.refreshTemplate(data);
 
             let addBtn = document.getElementById('js-add');
             addBtn.addEventListener('click', this.addList.bind(this));
-            let listElements = document.querySelectorAll('.list-name-container');
         });
     }
 
+    /**
+     * To have a smooth front, I first had the element in DOM and then
+     * send the data to the server asynchronously, he respond me with 
+     * the id of the card newly created.
+     */
     addList() {
         this.requestAdd = true;
-        let state = this.xhrCards.state;
+        let state = this.xhrCards.getState();
         let input = document.getElementById('js-list-name-input');
         let card = {'name': input.value, 'position': state.length + 1, 'id' : null};
         state.push(card);
-        this.xhrCards.state = state;
+        this.xhrCards.setState(state);
 
         let data = { Cards: state };
         this.refreshTemplate(data);
@@ -43,16 +47,6 @@ export default class CardsPage
         });
     }
 
-    selectList(e) {
-        let list = e.currentTarget;
-        this.xhrCards.listSelected = list.dataset.listId;
-        window.page.setPage('notesPage');
-        window.page.changePage();
-    }
-
-    /**
-     * page is the div where compiled template is inserted in DOM
-     */
     refreshTemplate(data) {
         let el = document.getElementById('cardsPage');
         //lists est ici le prefix du fichier "lists.handlebars"
@@ -61,6 +55,7 @@ export default class CardsPage
             return (a.position > b.position) ? 1 : -1;
         });
         el.innerHTML = template(data);
+        // After innerHTML we loose event bindings and must redo queryselector
 		this.dragAndDrop.setCards();
         this.bindEvents();
     }
